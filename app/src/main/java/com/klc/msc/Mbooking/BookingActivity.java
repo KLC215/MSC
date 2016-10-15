@@ -1,4 +1,4 @@
-package com.klc.msc.booking;
+package com.klc.msc.Mbooking;
 
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;

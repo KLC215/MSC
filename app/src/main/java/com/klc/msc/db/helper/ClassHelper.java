@@ -5,7 +5,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import com.klc.msc.db.contract.ClassContract;
-import com.klc.msc.db.contract.LevelContract;
 import com.klc.msc.db.contract.StatusContract;
 
 
@@ -17,20 +16,16 @@ public class ClassHelper extends SQLiteOpenHelper
                     ClassContract.ClassEntry.COL_NAME + " text, " +
                     ClassContract.ClassEntry.COL_PRICE + " integer, " +
                     ClassContract.ClassEntry.COL_DESCRIPTION + " text, " +
-                    ClassContract.ClassEntry.COL_LEVEL_ID + " integer, " +
                     ClassContract.ClassEntry.COL_LOCATION + " text, " +
                     ClassContract.ClassEntry.COL_LESSON_NO + " integer, " +
-                    ClassContract.ClassEntry.COL_WEEK_NO + " text, " +
                     ClassContract.ClassEntry.COL_MAX_STUDENT_NO + " integer, " +
                     ClassContract.ClassEntry.COL_START_DATE + " text, " +
                     ClassContract.ClassEntry.COL_END_DATE + " text, " +
-                    ClassContract.ClassEntry.COL_START_TIME + " integer, " +
-                    ClassContract.ClassEntry.COL_END_TIME + " integer, " +
+                    ClassContract.ClassEntry.COL_START_TIME + " text, " +
+                    ClassContract.ClassEntry.COL_END_TIME + " text, " +
                     ClassContract.ClassEntry.COL_STATUS_ID + " integer, " +
                     ClassContract.ClassEntry.COL_CREATED_AT + " text, " +
                     ClassContract.ClassEntry.COL_UPDATED_AT + " text, " +
-                    "FOREIGN KEY(" + ClassContract.ClassEntry.COL_LEVEL_ID + ") REFERENCES " +
-                    LevelContract.LevelEntry.TABLE + "(" + LevelContract.LevelEntry._ID + "), " +
                     "FOREIGN KEY(" + ClassContract.ClassEntry.COL_STATUS_ID + ") REFERENCES " +
                     StatusContract.StatusEntry.TABLE + "(" + StatusContract.StatusEntry._ID + "))";
 

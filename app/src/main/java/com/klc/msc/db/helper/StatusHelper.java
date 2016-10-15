@@ -31,6 +31,11 @@ public class StatusHelper extends SQLiteOpenHelper
     public void onCreate(SQLiteDatabase db)
     {
         db.execSQL(CREATE_TABLE);
+        db.execSQL("insert into " + StatusContract.StatusEntry.TABLE + " values(null, 'Open', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)");
+        db.execSQL("insert into " + StatusContract.StatusEntry.TABLE + " values(null, 'Reserved', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)");
+        db.execSQL("insert into " + StatusContract.StatusEntry.TABLE + " values(null, 'Full', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)");
+        db.execSQL("insert into " + StatusContract.StatusEntry.TABLE + " values(null, 'Confirmed', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)");
+        db.execSQL("insert into " + StatusContract.StatusEntry.TABLE + " values(null, 'Completed', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP)");
     }
 
     @Override

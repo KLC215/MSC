@@ -1,4 +1,4 @@
-package com.klc.msc.booking;
+package com.klc.msc.Mbooking;
 
 import com.klc.msc.BaseFragment;
 

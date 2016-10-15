@@ -1,4 +1,4 @@
-package com.klc.msc.magic_class;
+package com.klc.msc.Mclass;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;

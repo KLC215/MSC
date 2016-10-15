@@ -18,17 +18,11 @@ public class ClassContract
         // Class description
         public static final String COL_DESCRIPTION = "DESCRIPTION";
 
-        // Class level
-        public static final String COL_LEVEL_ID = "LEVEL_ID";
-
         // Class location
         public static final String COL_LOCATION = "LOCATION";
 
         // How many lesson in the class
         public static final String COL_LESSON_NO = "LESSON_NO";
-
-        // Class will be held at one day of week
-        public static final String COL_WEEK_NO = "WEEK_NO";
 
         // Class maximum student number
         public static final String COL_MAX_STUDENT_NO = "MAX_STUDENT_NO";

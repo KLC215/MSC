@@ -1,4 +1,4 @@
-package com.klc.msc.magic_class;
+package com.klc.msc.Mclass;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -40,8 +40,8 @@ public class ClassActivity extends AppCompatActivity
         vpClass = (ViewPager) findViewById(R.id.vpClass);
 
         // TODO: add class fragments
-        classFragments.add(ClassCreateFragment.getInstance(titles[0]));
-        classFragments.add(ClassViewFragment.getInstance(titles[1]));
+        classFragments.add(ClassCreateFragment2.getInstance(titles[0]));
+        classFragments.add(ClassViewFragment2.getInstance(titles[1]));
 
         classAdapter = new ClassAdapter(getSupportFragmentManager());
         vpClass.setAdapter(classAdapter);

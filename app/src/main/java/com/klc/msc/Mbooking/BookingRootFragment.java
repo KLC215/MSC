@@ -1,4 +1,4 @@
-package com.klc.msc.Mclass;
+package com.klc.msc.Mbooking;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -10,16 +10,16 @@ import android.view.ViewGroup;
 
 import com.klc.msc.R;
 
-public class ClassRootFragment extends Fragment
+public class BookingRootFragment extends Fragment
 {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState)
     {
-        View rootView = inflater.inflate(R.layout.fragment_class_root, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_booking_root, container, false);
 
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
-        transaction.replace(R.id.flClassRoot, new ClassViewFragment());
+        transaction.replace(R.id.flBookingRoot, new BookingViewFragment());
         transaction.commit();
 
         return rootView;

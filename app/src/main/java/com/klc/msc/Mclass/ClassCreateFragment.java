@@ -18,9 +18,10 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TimePicker;
 
+import com.klc.msc.db.MStatus;
 import com.klc.msc.R;
-import com.klc.msc.db.contract.ClassContract;
-import com.klc.msc.db.helper.ClassHelper;
+import com.klc.msc.db.contract.MSC_Contract;
+import com.klc.msc.db.helper.MSC_Helper;
 import com.klc.msc.utils.DateTimeUtils;
 import com.klc.msc.utils.RegexUtils;
 
@@ -32,9 +33,9 @@ import static java.lang.String.format;
 
 public class ClassCreateFragment extends Fragment implements View.OnClickListener
 {
-    private        ClassHelper classHelper;
-    private static Calendar    calendar;
-    private static int         year, month, dayOfMonth;
+    private        MSC_Helper mscHelper;
+    private static Calendar   calendar;
+    private static int        year, month, dayOfMonth;
     private String title, startDate, endDate, startTime, endTime;
 
     private EditText etClassName, etClassPrice, etClassDescription, etClassLocation,
@@ -152,7 +153,7 @@ public class ClassCreateFragment extends Fragment implements View.OnClickListene
             {
                 if (s.length() > 0) {
                     String tips1 = "Click to set date";
-                    String tips2 = "Please choose Class starting date";
+                    String tips2 = "Please choose MClass starting date";
                     btnClassStartDate.setText(tips1);
                     btnClassEndDate.setText(tips2);
                     btnClassStartDate.setEnabled(true);
@@ -184,7 +185,7 @@ public class ClassCreateFragment extends Fragment implements View.OnClickListene
             {
                 if (s.length() > 0) {
                     String tips1 = "Click to set time";
-                    String tips2 = "Please choose Class starting time";
+                    String tips2 = "Please choose MClass starting time";
                     btnClassStartTime.setText(tips1);
                     btnClassEndTime.setText(tips2);
                     btnClassStartTime.setEnabled(true);
@@ -201,7 +202,7 @@ public class ClassCreateFragment extends Fragment implements View.OnClickListene
     private Boolean checkForm() throws Exception
     {
         if (RegexUtils.isEmpty(etClassName.getText().toString())) {
-            throw new Exception("Class name cannot be empty !");
+            throw new Exception("MClass name cannot be empty !");
         }
         if (RegexUtils.isEmpty(etClassPrice.getText().toString())) {
             throw new Exception("Price cannot be empty !");
@@ -222,10 +223,10 @@ public class ClassCreateFragment extends Fragment implements View.OnClickListene
             throw new Exception("Maximum student number cannot be empty !");
         }
         if (!RegexUtils.isFormatedDate(btnClassStartDate.getText().toString())) {
-            throw new Exception("Class start date cannot be empty !");
+            throw new Exception("MClass start date cannot be empty !");
         }
         if (!RegexUtils.isFormatedTime(btnClassStartTime.getText().toString())) {
-            throw new Exception("Class start time cannot be empty !");
+            throw new Exception("MClass start time cannot be empty !");
         }
 
         return true;
@@ -233,25 +234,28 @@ public class ClassCreateFragment extends Fragment implements View.OnClickListene
 
     private void createClass()
     {
-        classHelper = new ClassHelper(getActivity());
-        SQLiteDatabase db     = classHelper.getWritableDatabase();
+        //classHelper = new ClassHelper(getActivity());
+        //SQLiteDatabase db     = classHelper.getWritableDatabase();
+        mscHelper = new MSC_Helper(getActivity());
+        SQLiteDatabase db = mscHelper.getWritableDatabase();
         ContentValues  values = new ContentValues();
 
-        values.put(ClassContract.ClassEntry.COL_NAME, etClassName.getText().toString());
-        values.put(ClassContract.ClassEntry.COL_PRICE, etClassPrice.getText().toString());
-        values.put(ClassContract.ClassEntry.COL_DESCRIPTION, etClassDescription.getText().toString());
-        values.put(ClassContract.ClassEntry.COL_LOCATION, etClassLocation.getText().toString());
-        values.put(ClassContract.ClassEntry.COL_LESSON_NO, etClassLessonNumber.getText().toString());
-        values.put(ClassContract.ClassEntry.COL_MAX_STUDENT_NO, etClassStudentNumber.getText().toString());
-        values.put(ClassContract.ClassEntry.COL_START_DATE, btnClassStartDate.getText().toString());
-        values.put(ClassContract.ClassEntry.COL_END_DATE, btnClassEndDate.getText().toString());
-        values.put(ClassContract.ClassEntry.COL_START_TIME, btnClassStartTime.getText().toString());
-        values.put(ClassContract.ClassEntry.COL_END_TIME, btnClassEndTime.getText().toString());
-        values.put(ClassContract.ClassEntry.COL_STATUS_ID, 1); // Status: Open
-        values.put(ClassContract.ClassEntry.COL_CREATED_AT, DateTimeUtils.getDateTime());
-        values.put(ClassContract.ClassEntry.COL_UPDATED_AT, DateTimeUtils.getDateTime());
+        values.put(MSC_Contract.MSCEntry.COL_NAME, etClassName.getText().toString());
+        values.put(MSC_Contract.MSCEntry.COL_PRICE, Integer.parseInt(etClassPrice.getText().toString()));
+        values.put(MSC_Contract.MSCEntry.COL_DESCRIPTION, etClassDescription.getText().toString());
+        values.put(MSC_Contract.MSCEntry.COL_LOCATION, etClassLocation.getText().toString());
+        values.put(MSC_Contract.MSCEntry.COL_LESSON_NO, Integer.parseInt(etClassLessonNumber.getText().toString()));
+        values.put(MSC_Contract.MSCEntry.COL_HOURS, Integer.parseInt(etClassHour.getText().toString()));
+        values.put(MSC_Contract.MSCEntry.COL_MAX_STUDENT_NO, Integer.parseInt(etClassStudentNumber.getText().toString()));
+        values.put(MSC_Contract.MSCEntry.COL_START_DATE, btnClassStartDate.getText().toString());
+        values.put(MSC_Contract.MSCEntry.COL_END_DATE, btnClassEndDate.getText().toString());
+        values.put(MSC_Contract.MSCEntry.COL_START_TIME, btnClassStartTime.getText().toString());
+        values.put(MSC_Contract.MSCEntry.COL_END_TIME, btnClassEndTime.getText().toString());
+        values.put(MSC_Contract.MSCEntry.COL_STATUS_ID, MStatus.OPEN);
+        values.put(MSC_Contract.MSCEntry.COL_CREATED_AT, DateTimeUtils.getDateTime());
+        values.put(MSC_Contract.MSCEntry.COL_UPDATED_AT, DateTimeUtils.getDateTime());
 
-        db.insert(ClassContract.ClassEntry.TABLE, null, values);
+        db.insert(MSC_Contract.MSCEntry.TABLE_CLASS, null, values);
         clearForm();
         finishInsert();
         db.close();
@@ -263,7 +267,7 @@ public class ClassCreateFragment extends Fragment implements View.OnClickListene
         AlertDialog.Builder dialog = new AlertDialog.Builder(getActivity());
 
         dialog.setTitle("Success !");
-        dialog.setMessage("Class has been created !");
+        dialog.setMessage("MClass has been created !");
         dialog.setCancelable(false);
         dialog.setPositiveButton("OK", new DialogInterface.OnClickListener()
         {

@@ -1,6 +1,5 @@
 package com.klc.msc;
 
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -9,13 +8,11 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 
+import com.klc.msc.Mbooking.BookingRootFragment;
 import com.klc.msc.Mclass.ClassRootFragment;
-import com.klc.msc.db.helper.ClassHelper;
-import com.klc.msc.db.helper.StatusHelper;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -34,27 +31,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private LinearLayout tab1;
     private LinearLayout tab2;
 
-    private ImageButton ib1;
-    private ImageButton ib2;
+    private ImageButton ibBooking;
+    private ImageButton ibClass;
     private ImageButton ib3;
     private ImageButton ib4;
-
-
-    //TODO: Delete drop class button
-    private Button btnDropClass;
-
-    private StatusHelper statusHelper;
-    private ClassHelper  classHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        statusHelper = new StatusHelper(this);
-        SQLiteDatabase db = statusHelper.getWritableDatabase();
-        statusHelper.onUpgrade(db, 1, 1);
 
         initView();
         initViewPage();
@@ -70,8 +56,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         tab1 = (LinearLayout) findViewById(R.id.tab1);
         tab2 = (LinearLayout) findViewById(R.id.tab2);
 
-        ib1 = (ImageButton) findViewById(R.id.ib1);
-        ib2 = (ImageButton) findViewById(R.id.ib2);
+        ibBooking = (ImageButton) findViewById(R.id.ibBooking);
+        ibClass = (ImageButton) findViewById(R.id.ibClass);
         ib3 = (ImageButton) findViewById(R.id.ib3);
         ib4 = (ImageButton) findViewById(R.id.ib4);
 
@@ -81,7 +67,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     {
         //TODO: Add fragment
         fragments = new ArrayList<>();
-        //fragments.add(new ClassRootFragment());
+
+        fragments.add(new BookingRootFragment());
         fragments.add(new ClassRootFragment());
 
         //MyFragmentAdapter fragmentAdapter = new MyFragmentAdapter(getSupportFragmentManager(), fragments);
@@ -109,8 +96,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             {
                 Fragment fragment = ((SliderPagerAdapter) viewPager.getAdapter()).getFragment(position);
 
-                if (position == 0 && fragment != null) {
-                    fragment.onResume();
+                if(fragment != null) {
+                    switch (position) {
+                        case 1:
+                            fragment.onResume();
+                    }
                 }
             }
 
@@ -158,6 +148,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         {
             switch (position) {
                 case 0:
+                    return new BookingRootFragment();
+                case 1:
                     return new ClassRootFragment();
                 default:
                     return null;
